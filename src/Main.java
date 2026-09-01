@@ -18,7 +18,7 @@ void main() {
 }
 
 public static void playRound(Deck pool, Player us, Player dlr, Scanner scn, int factor) {
-    ArrayList<Player> hands = new ArrayList<Player>();
+    ArrayList<Player> hands = new ArrayList<>();
     hands.add(us);
     us.addCard(pool.dealCard());
     dlr.addCard(pool.dealCard());
@@ -28,7 +28,7 @@ public static void playRound(Deck pool, Player us, Player dlr, Scanner scn, int 
     System.out.println(dlr);
     int timesBusted = 0;
     String action;
-    boolean continueAction = true;
+    boolean continueAction;
     boolean dlrBusted = false;
 
 
@@ -40,7 +40,7 @@ public static void playRound(Deck pool, Player us, Player dlr, Scanner scn, int 
         continueAction = true;
 
         while (continueAction) {
-            if (currentHand.canSplit()) {
+            if (currentHand.canSplit() && (hands.size() < 5)) {
                 System.out.println("Would you like to Hit, Stand, or Split? (H, S, P)");
             } else {
                 System.out.println("Would you like to Hit or Stand? (H, S)");
@@ -63,7 +63,7 @@ public static void playRound(Deck pool, Player us, Player dlr, Scanner scn, int 
             } else if (action.equalsIgnoreCase("stand") || action.equalsIgnoreCase("s")) {
                 continueAction = false;
             } else if (action.equalsIgnoreCase("split") || action.equalsIgnoreCase("p")){
-                if (currentHand.canSplit()) {
+                if (currentHand.canSplit() && (hands.size() < 5)) {
                     Player newHand  = new Player(false);
 
                     int splitCard = currentHand.removeCardSplit();

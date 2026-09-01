@@ -2,9 +2,9 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 public class Player {
-    private ArrayList<Integer> cards = new ArrayList<>();
+    private final ArrayList<Integer> cards = new ArrayList<>();
     private final HashMap<Integer, String> toCards = new HashMap<>();
-    private boolean isDealer;
+    private final boolean isDealer;
     private boolean afterUser;
 
     public Player(boolean isDlr) {
@@ -57,7 +57,7 @@ public class Player {
         afterUser = tf;
     }
     public boolean canSplit() {
-        return cards.size() == 2 && cards.get(0).equals( cards.get(1)); //2 of the same card
+        return cards.size() == 2 && cards.get(0).equals(cards.get(1)); //2 of the same card
     }
     public int removeCardSplit() {
         return cards.remove(1);
@@ -65,18 +65,18 @@ public class Player {
 
 
     public String toString() {
-        String end;
+        String print;
         if(!isDealer) {
-            end = "Card Value: " + getCardValue() + " | Your Cards: " + toCards.get(cards.getFirst()) + ", ";
+            print = "Card Value: " + getCardValue() + " | Your Cards: " + toCards.get(cards.getFirst()) + ", ";
         } else if (!afterUser){
-            end = "Dealer's Cards: Hole Card, ";
+            print = "Dealer's Cards: Hole Card, ";
         } else {
-            end = "Dealer's Value: " + getCardValue() + " | Dealer's Cards: " + toCards.get(cards.getFirst()) + ", ";
+            print = "Dealer's Value: " + getCardValue() + " | Dealer's Cards: " + toCards.get(cards.getFirst()) + ", ";
         }
         for (int i = 1; i < cards.size() - 1; i++) {
-            end += toCards.get(cards.get(i)) + ", ";
+            print += toCards.get(cards.get(i)) + ", ";
         }
-        end += toCards.get(cards.getLast());
-        return end;
+        print += toCards.get(cards.getLast());
+        return print;
     }
 }
