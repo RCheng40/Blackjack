@@ -7,6 +7,7 @@ public class Player {
     private final boolean isDealer;
     private boolean afterUser;
     private boolean hasBusted;
+    private boolean wasSplit;
 
     public Player(boolean isDlr) {
         isDealer = isDlr;
@@ -57,6 +58,8 @@ public class Player {
     }
     public void reset() {
         cards.clear();
+        hasBusted = false;
+        wasSplit = false;
     }
     public void setAfterUser(boolean tf) {
         afterUser = tf;
@@ -66,6 +69,12 @@ public class Player {
     }
     public int removeCardSplit() {
         return cards.remove(1);
+    }
+    public boolean isBJ() {
+        return !wasSplit && cards.size() == 2 && getCardValue() == 21;
+    }
+    public void setWasSplit(boolean tf) {
+        wasSplit = tf;
     }
 
     public String toString() {
