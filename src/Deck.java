@@ -9,12 +9,6 @@ public class Deck {
     public void reset(int factor) {
         totalCards = 0;
         cards[0] = 100;
-        /*
-        for (int i = 0; i < 13; i++) {
-            cards[i] = 4 * factor;
-            totalCards += 4 * factor;
-        }
-        */
     }
     public boolean hasCard(int index) {
         return cards[index] > 0;

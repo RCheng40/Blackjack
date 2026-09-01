@@ -26,14 +26,6 @@ public class Player {
 
     public void addCard(int value) {
         cards.add(value);
-        /*
-        value++;
-        if (value >= 10) //10, j, q, k = 10
-            value = 10;
-        if ((value == 1) && totalCardValue <= 10) //if ace & would NOT bust
-            value = 11;
-        totalCardValue += value;
-         */
     }
     public int getCardValue() {
         int total = 0;
@@ -56,17 +48,7 @@ public class Player {
         }
         return total;
     }
-    /*
-    public void addCard(int value) {
-        cards.add(value);
-        value++;
-        if (value >= 10)
-            value = 10;
-        if ((value == 1) && totalCardValue <= 10)
-            value = 11;
-        totalCardValue += value;
-    }
-    */
+
     public void reset() {
         //totalCardValue = 0;
         cards.clear();
@@ -79,12 +61,6 @@ public class Player {
     }
     public int removeCardSplit() {
         return cards.remove(1);
-        /*int cardInt = cards.remove(1);
-        int cardValue = cardInt + 1;
-        if (cardInt >= 10) //10, j, q, k = 10
-            cardValue = 10;
-        totalCardValue -= cardValue;
-        return cardInt; */
     }
 
 
