@@ -2,10 +2,10 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 public class Player {
-    private ArrayList<Integer> cards = new ArrayList<Integer>();
-    private final HashMap<Integer, String> toCards = new HashMap<Integer, String>();
-    private boolean isDealer = false;
-    private boolean afterUser = false;
+    private ArrayList<Integer> cards = new ArrayList<>();
+    private final HashMap<Integer, String> toCards = new HashMap<>();
+    private boolean isDealer;
+    private boolean afterUser;
 
     public Player(boolean isDlr) {
         isDealer = isDlr;
