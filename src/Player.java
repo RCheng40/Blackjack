@@ -6,6 +6,7 @@ public class Player {
     private final HashMap<Integer, String> toCards = new HashMap<>();
     private final boolean isDealer;
     private boolean afterUser;
+    private boolean hasBusted;
 
     public Player(boolean isDlr) {
         isDealer = isDlr;
@@ -48,9 +49,13 @@ public class Player {
         }
         return total;
     }
-
+    public void setHasBusted(boolean tf) {
+        hasBusted = tf;
+    }
+    public boolean getHasBusted() {
+        return hasBusted;
+    }
     public void reset() {
-        //totalCardValue = 0;
         cards.clear();
     }
     public void setAfterUser(boolean tf) {
@@ -62,7 +67,6 @@ public class Player {
     public int removeCardSplit() {
         return cards.remove(1);
     }
-
 
     public String toString() {
         String print;

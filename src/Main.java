@@ -20,26 +20,41 @@ void main() {
 public static void playRound(Deck pool, Player us, Player dlr, Scanner scn, int factor) {
     ArrayList<Player> hands = new ArrayList<>();
     hands.add(us);
+    dealInitialCards(pool, us, dlr);
+    playUserTurns(pool, hands, scn, factor);
+    playDealerTurn(pool, dlr);
+    determineWinner(hands, dlr);
+    checkShuffle(pool,factor);
+    System.out.println("The hand is over, would you like to play another? Type anything to continue or type stop to finish playing: ");
+}
+
+public static void checkShuffle (Deck pool, int factor) {
+    if (pool.getTotalCards() <= (factor * 52 * .5)) { //if there is less than half remaining, shuffle
+        pool.reset(factor);
+        System.out.println("The dealer has shuffled the deck.");
+    }
+}
+public static void dealInitialCards (Deck pool, Player us, Player dlr) {
     us.addCard(pool.dealCard());
     dlr.addCard(pool.dealCard());
     us.addCard(pool.dealCard());
     dlr.addCard(pool.dealCard());
     System.out.println(us);
     System.out.println(dlr);
+}
+public static void playUserTurns (Deck pool, ArrayList<Player> hands, Scanner scn, int factor) {
     int timesBusted = 0;
     String action;
     boolean continueAction;
-    boolean dlrBusted = false;
-
 
     for (int i = 0; i < hands.size(); i++) {
         Player currentHand = hands.get(i);
-        if (hands.size() > 1) {
-            System.out.println("Hand " + (i + 1) + ": " + hands.get(i));
-        }
         continueAction = true;
 
         while (continueAction) {
+            if (hands.size() > 1) {
+                System.out.println("Hand " + (i + 1) + ": " + hands.get(i));
+            }
             if (currentHand.canSplit() && (hands.size() < 5)) {
                 System.out.println("Would you like to Hit, Stand, or Split? (H, S, P)");
             } else {
@@ -57,7 +72,7 @@ public static void playRound(Deck pool, Player us, Player dlr, Scanner scn, int 
                     break;
                 }
                 if (currentHand.getCardValue() == 21) {
-                    System.out.println("BlackJack!");
+                    System.out.println("21!");
                     break;
                 }
             } else if (action.equalsIgnoreCase("stand") || action.equalsIgnoreCase("s")) {
@@ -74,6 +89,7 @@ public static void playRound(Deck pool, Player us, Player dlr, Scanner scn, int 
 
                     hands.add(newHand);
                     for (int j = 0; j < hands.size(); j++) {
+                        System.out.println("-----------------------------------------");
                         System.out.println("Hand " + (j + 1) + ": " + hands.get(j));
                     }
                 } else {
@@ -87,8 +103,9 @@ public static void playRound(Deck pool, Player us, Player dlr, Scanner scn, int 
     if (hands.size() == timesBusted) {
         checkShuffle(pool,factor);
         System.out.println("The hand is over, would you like to play another? Type anything to continue or type stop to finish playing: ");
-        return;
     }
+}
+public static void playDealerTurn(Deck pool, Player dlr) {
     dlr.setAfterUser(true);
     System.out.println(dlr);
     while (dlr.getCardValue() < 17) {
@@ -98,10 +115,13 @@ public static void playRound(Deck pool, Player us, Player dlr, Scanner scn, int 
     }
     if (dlr.getCardValue() > 21) {
         System.out.println("Dealer Busted! You Win!");
-        dlrBusted = true;
+        dlr.setHasBusted(true);
     } else {
         System.out.println("The Dealer Stands!");
     }
+    dlr.setAfterUser(false);
+}
+public static void determineWinner(ArrayList<Player> hands, Player dlr) {
     for (int i = 0; i < hands.size(); i++) {
         String print = "";
         if (hands.size() > 1) {
@@ -110,7 +130,7 @@ public static void playRound(Deck pool, Player us, Player dlr, Scanner scn, int 
         int difference = hands.get(i).getCardValue() - dlr.getCardValue();
         if (hands.get(i).getCardValue() > 21) {
             System.out.println(print + "You Lose.");
-        } else if (dlrBusted) {
+        } else if (dlr.getHasBusted()) {
             System.out.println(print + "You Win!");
         } else if (difference > 0) {
             System.out.println(print + "You Win!");
@@ -119,15 +139,5 @@ public static void playRound(Deck pool, Player us, Player dlr, Scanner scn, int 
         } else {
             System.out.println(print + "Push.");
         }
-    }
-    checkShuffle(pool,factor);
-    dlr.setAfterUser(false);
-    System.out.println("The hand is over, would you like to play another? Type anything to continue or type stop to finish playing: ");
-}
-
-public static void checkShuffle (Deck pool, int factor) {
-    if (pool.getTotalCards() <= (factor * 52 * .5)) { //if there is less than half remaining, shuffle
-        pool.reset(factor);
-        System.out.println("The dealer has shuffled the deck.");
     }
 }
