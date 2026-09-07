@@ -2,8 +2,8 @@ public class Deck {
     private final int[] cards = new int[13];
     private int totalCards = 0;
 
-    public Deck(int multiplicationFactor) {
-        reset(multiplicationFactor);
+    public Deck(int numberDecks) {
+        reset(numberDecks);
     }
 
     public void reset(int factor) {
@@ -13,13 +13,20 @@ public class Deck {
             totalCards += 4 * factor;
         }
     }
+
     public boolean hasCard(int index) {
         return cards[index] > 0;
     }
+
     public void useCard(int index) {
         cards[index]--;
         totalCards--;
     }
+
+    public int getCardCount(int index) {
+        return cards[index];
+    }
+
     public int getTotalCards() {
         return totalCards;
     }
