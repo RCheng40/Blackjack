@@ -5,12 +5,23 @@ public class Player {
     private final ArrayList<Integer> cards = new ArrayList<>();
     private final HashMap<Integer, String> toCards = new HashMap<>();
     private final boolean isDealer;
+    private double money;
+    private double bet;
     private boolean afterUser;
     private boolean hasBusted;
     private boolean wasSplit;
 
-    public Player(boolean isDlr) {
-        isDealer = isDlr;
+    public Player(double mny) {
+        money = mny;
+        isDealer = false;
+        initializeHashmap();
+    }
+    public Player() {
+        isDealer = true;
+        initializeHashmap();
+    }
+
+    public void initializeHashmap() {
         toCards.put(0, "Ace");
         toCards.put(1, "2");
         toCards.put(2, "3");
@@ -25,7 +36,6 @@ public class Player {
         toCards.put(11, "Queen");
         toCards.put(12, "King");
     }
-
     public void addCard(int value) {
         cards.add(value);
     }
@@ -50,8 +60,8 @@ public class Player {
         }
         return total;
     }
-    public void setHasBusted(boolean tf) {
-        hasBusted = tf;
+    public void setHasBusted() {
+        hasBusted = true;
     }
     public boolean getHasBusted() {
         return hasBusted;
@@ -60,12 +70,17 @@ public class Player {
         cards.clear();
         hasBusted = false;
         wasSplit = false;
+        afterUser = false;
+        bet = 0;
     }
-    public void setAfterUser(boolean tf) {
-        afterUser = tf;
+    public void setAfterUser() {
+        afterUser = true;
+    }
+    public boolean hasTwoCards() {
+        return cards.size() == 2;
     }
     public boolean canSplit() {
-        return cards.size() == 2 && cards.get(0).equals(cards.get(1)); //2 of the same card
+        return hasTwoCards() && cards.get(0).equals(cards.get(1)); //2 of the same card
     }
     public int removeCardSplit() {
         return cards.remove(1);
@@ -76,8 +91,43 @@ public class Player {
     public void setWasSplit(boolean tf) {
         wasSplit = tf;
     }
+    public double getMoney() {
+        return money;
+    }
+    public void changeMoney(double mny) {
+        money += mny;
+    }
+    public void setBet(double amount) {
+        bet = amount;
+    }
+    public double getBet() {
+        return bet;
+    }
+
+    public boolean isSoft17() {
+        if (getCardValue() != 17) {
+            return false;
+        }
+        int totalAce11 = 0; //total if ace is 11, must be for soft 17
+        boolean hasAce = false;
+        for (int card : cards) {
+            int value = card + 1;
+            if (value >= 10) {
+                value = 10;
+            }
+            if (card == 0) {
+                value = 11;
+                hasAce = true;
+            }
+            totalAce11 += value;
+        }
+        return hasAce && totalAce11 == 17;
+    }
 
     public String toString() {
+        if (!isDealer) {
+            System.out.println("You have $" + money + " | Your bet: $" + bet);
+        }
         String print;
         if(!isDealer) {
             print = "Card Value: " + getCardValue() + " | Your Cards: " + toCards.get(cards.getFirst()) + ", ";
