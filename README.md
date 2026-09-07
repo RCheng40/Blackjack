@@ -1,5 +1,5 @@
 # Blackjack Probability Analyzer
-Java-based Blackjack game which gives the exact probabilities of busting given another card at each action after each hand.
+Java-based Blackjack command-line game. It gives a list of the exact probabilities of busting given another card at each turn after each hand.
 
 # About the Project
 It was developed for fun and as an introduction to the implementation of Statistics and Probability in code
@@ -18,7 +18,10 @@ Calculates and stores the probability of busting at each action available to the
 Implements aces change values depending on the total value of the hand
 Tracks decks dynamically, which allows for counting cards and accurate probability based on the exact number of remaining cards in the deck
 
-# Calculation
+# Calculationa
 Finds difference between 21 and the current hand value
 Finds number of total cards that would lead to NOT BUSTING
 Divide that number by the total cards left in the deck 
+
+# License
+This project is open-source and available under the [MIT License](License).
