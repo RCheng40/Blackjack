@@ -52,6 +52,7 @@ void main() {
         }
 
         while (true) {
+            System.out.println("You have $" + user.getMoney());
             System.out.println("The hand is over. Type anything to play another hand, \"Rules\" to view the rules, or \"Stop\" to finish playing: ");
             String action = scanner.next();
 
